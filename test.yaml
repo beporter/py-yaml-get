@@ -1,0 +1,25 @@
+# Sample YAML file. Used in tests.sh and referenced in README.md.
+---
+debug:
+    enabled: true
+    symbols: false
+    includes:
+        - ./debug
+        - ./local-only
+version: 42
+name: Foo.app
+directories:
+    source: ./src
+    temp: /tmp
+    destination: /Applications
+dependencies:
+    - stdlib
+    - fizz
+    - buzz
+description: >
+    This is a great app.
+    It can do many things.
+    You should try it.
+resources: |
+    Issues: https://app.com/issues
+    Code: https://app.com/issues

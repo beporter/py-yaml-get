@@ -4,6 +4,7 @@ A small single-file, no-dependencies python command line script that consumes a 
 
 Initially built to supplment automated command line usage of an [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
 
+
 ## Requirements
 
 * Python v2.7 or v3.0+
@@ -16,52 +17,35 @@ Initially built to supplment automated command line usage of an [Ansible Vault](
 * Make it executable.
     * `$ chmod a+x yaml-get.py`
 
+
 ## Usage
 
 * The script expects the YAML document to be provided on STDIN.
 * The script accepts a single command line argument representing the "dotted path" to the nested value you wish to extract.
 
+
 ### Examples
 
-Given the following sample `config.yaml` file:
+Given the sample [`test.yaml` file](test.yaml) (included in this repo):
 
-```yaml
----
-debug: true
-version: 42
-name: Foo.app
-directories:
-    source: ./src
-    temp: /tmp
-    destination: /Applications
-dependencies:
-    - stdlib
-    - bar
-    - fizz
-description: |
-    This is a great app.
-    It can do many things.
-    You should try it.
-```
 
 ```shell
-$ cat config.yaml | ./yaml-get.py debug
+$ cat test.yaml | ./yaml-get.py debug.enabled
 True
 
-$ cat config.yaml | ./yaml-get.py version
+$ cat test.yaml | ./yaml-get.py version
 42
 
-$ cat config.yaml | ./yaml-get.py directories.source
+$ cat test.yaml | ./yaml-get.py directories.source
 ./src
 
-$ cat config.yaml | ./yaml-get.py dependencies.0
+$ cat test.yaml | ./yaml-get.py dependencies.0
 stdlib
 
-$ cat config.yaml | ./yaml-get.py description
-This is a great app.
-It can do many things.
-You should try it.
+$ cat test.yaml | ./yaml-get.py description
+This is a great app. It can do many things. You should try it.
 ```
+
 
 ### Error Handling
 
@@ -70,16 +54,28 @@ In the event that the provided YAML document can not be parsed, or the provided 
 For automated workflows, you may wish to suppress the STDERR output:
 
 ```shell
-$ cat config.yml | ./yaml-get.py bad.path.here
+$ cat test.yaml | ./yaml-get.py bad.path.here
 Error: 'str' object has no attribute 'get'
 
 $ echo $?
 2  # Also produces a non-zero exit code.
 
-$ cat config.yml | ./yaml-get.py bad.path.here 2>/dev/null  # Error output suppressed.
+$ cat test.yaml | ./yaml-get.py bad.path.here 2>/dev/null  # Error output suppressed.
 
 $ echo $?
 2  # Still produces a non-zero exit code.
+```
+
+
+### Known Issues (aka "Please fix me")
+
+Error handling is currently quite crude in the script, and there are many edge cases not specifically addressed.
+
+For example, asking for a non-leaf node currently returns a json-ish string when it should probably error instead:
+
+```shell
+$ cat test.yaml | ./yaml-get.py debug
+{'symbols': False, 'enabled': True, 'includes': ['./debug', './local-only']}
 ```
 
 
@@ -99,6 +95,18 @@ Please use [GitHub Isuses](https://github.com/beporter/py-yaml-get/issues) for l
 
 Please fork this repository, create a new topic branch, and submit a [pull request](https://github.com/beporter/py-yaml-get/issues) for your work.
 
+
+### Testing
+
+Tests for the script are maintained in `tests.sh` and make use of the [`assert.sh`](https://github.com/lehmannro/assert.sh) package from [@lehmannro](https://github.com/lehmannro), which itself includes a sample inline YAML document.
+
+Tests take the form of:
+
+```bash
+assert "command to run" "expected output"
+# or
+assert_raises "command to run" N  # Where `N` is the integer exit code expected.
+```
 
 
 ## License
