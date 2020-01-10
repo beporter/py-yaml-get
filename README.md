@@ -2,7 +2,7 @@
 
 A small single-file, no-dependencies python command line script that consumes a YAML file and displays a single nested value named by a `dotted.path` argument.
 
-Initially built to supplment automated command line usage of an [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
+Initially built to supplement automated command line usage of an [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html).
 
 
 ## Requirements
@@ -88,12 +88,12 @@ Please note that this project is released with a [Contributor Code of Conduct](C
 
 ### Reporting Issues
 
-Please use [GitHub Isuses](https://github.com/beporter/py-yaml-get/issues) for listing any known defects or issues.
+Please use [GitHub Issues](https://github.com/beporter/py-yaml-get/issues) for listing any known defects or issues.
 
 
 ### Development
 
-Please fork this repository, create a new topic branch, and submit a [pull request](https://github.com/beporter/py-yaml-get/issues) for your work.
+Please fork this repository, create a new topic branch, and submit a [pull request](https://github.com/beporter/py-yaml-get/compare) for your work.
 
 
 ### Testing
@@ -116,4 +116,4 @@ assert_raises "command to run" N  # Where `N` is the integer exit code expected.
 
 ## Copyright
 
-Copyright &copy; 2018 Brian Porter
+Copyright &copy; 2020 Brian Porter
