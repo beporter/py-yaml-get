@@ -22,7 +22,7 @@ def get_by_path(root, path):
 
 def main():
     if len(sys.argv) < 2:
-        sys.stderr.write('Porivde a dotted.var.path as the first arg.')
+        sys.stderr.write('Provide a dotted.var.path as the first arg.')
         sys.exit(1)
 
     try:
